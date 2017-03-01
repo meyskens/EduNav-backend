@@ -7,11 +7,12 @@ import (
 
 // Room contains all info for a room
 type Room struct {
-	ID    bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
-	Name  string        `json:"name,omitempty" bson:"name,omitempty"`
-	MapID bson.ObjectId `json:"mapID,omitempty" bson:"mapID,omitempty"`
-	X     int           `json:"x" bson:"x"`
-	Y     int           `json:"y" bson:"y"`
+	ID      bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
+	Name    string        `json:"name,omitempty" bson:"name,omitempty"`
+	MapID   bson.ObjectId `json:"mapID,omitempty" bson:"mapID,omitempty"`
+	X       int           `json:"x" bson:"x"`
+	Y       int           `json:"y" bson:"y"`
+	Comment string        `json:"comment,omitempty" bson:"comment,omitempty"`
 }
 
 // Rooms returns the methods for the maps database
