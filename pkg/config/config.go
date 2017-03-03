@@ -9,6 +9,10 @@ import (
 type ConfigurationInfo struct {
 	MongoDBURL string `json:"mongoDBURL"`
 	APIToken   string `json:"apiToken"`
+	AutoTLS    bool   `json:"autoTLS"`
+	Bind       string `json:"bind"`
+	Hostname   string `json:"hostname"`
+	CertCache  string `json:"certCache"`
 }
 
 // GetConfiguration reads the confiruration from config.json and returns it

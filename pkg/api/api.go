@@ -3,6 +3,8 @@ package api
 import (
 	"net/http"
 
+	"golang.org/x/crypto/acme/autocert"
+
 	"../basestations"
 	"../config"
 	"../database"
@@ -25,7 +27,13 @@ func Run() {
 	e.GET("/", getRoot)
 	e.GET("/maps", getMaps)
 	e.POST("/basestations/:key/add", addBaseStation)
-	e.Logger.Fatal(e.Start(":8080"))
+	if conf.AutoTLS {
+		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist(conf.Hostname)
+		e.AutoTLSManager.Cache = autocert.DirCache(conf.CertCache)
+		e.Logger.Fatal(e.StartAutoTLS(conf.Bind))
+	} else {
+		e.Logger.Fatal(e.Start(conf.Bind))
+	}
 }
 
 // e.GET("/", getRoot)
