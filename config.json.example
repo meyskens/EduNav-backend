@@ -1,0 +1,8 @@
+{
+    "mongoDBURL": "mongodb://user:pass@server.com/dbname",
+    "APIToken": "CHANGEME",
+    "autoTLS": true,
+    "bind": ":8080",
+    "hostname": "edunav.eyskens.me", //autoTLS only
+    certCache: "/var/acme/" //autoTLS only
+}
