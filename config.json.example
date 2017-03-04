@@ -1,5 +1,6 @@
 {
     "mongoDBURL": "mongodb://user:pass@server.com/dbname",
+    "mongoUseTLS": false,
     "APIToken": "CHANGEME",
     "autoTLS": true,
     "bind": ":8080",

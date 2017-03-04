@@ -7,12 +7,13 @@ import (
 
 // ConfigurationInfo contains the config file's content
 type ConfigurationInfo struct {
-	MongoDBURL string `json:"mongoDBURL"`
-	APIToken   string `json:"apiToken"`
-	AutoTLS    bool   `json:"autoTLS"`
-	Bind       string `json:"bind"`
-	Hostname   string `json:"hostname"`
-	CertCache  string `json:"certCache"`
+	MongoDBURL  string `json:"mongoDBURL"`
+	MongoUseTLS bool   `json:"mongoUseTLS"`
+	APIToken    string `json:"apiToken"`
+	AutoTLS     bool   `json:"autoTLS"`
+	Bind        string `json:"bind"`
+	Hostname    string `json:"hostname"`
+	CertCache   string `json:"certCache"`
 }
 
 // GetConfiguration reads the confiruration from config.json and returns it
