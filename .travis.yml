@@ -1,0 +1,22 @@
+sudo: required
+language: go
+go:
+  - 1.8
+addons:
+  ssh_known_hosts: edunav.eyskens.me
+  apt:
+    packages:
+        - sshpass
+
+install:
+  - export SSHPASS=$DEPLOY_PASS
+
+script:
+  - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
+  - GOOS=linux GOARCH=arm go build main.go
+
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    branch: prod
