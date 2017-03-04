@@ -10,6 +10,7 @@ addons:
 
 install:
   - export SSHPASS=$DEPLOY_PASS
+  - export GOPATH=/tmp/go
 
 before_script:
   - go vet ./...
@@ -17,7 +18,7 @@ before_script:
 
 script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
-  - go get -v -d
+  - go get -u -v -d
   - GOOS=linux GOARCH=arm go build main.go
 
 deploy:
