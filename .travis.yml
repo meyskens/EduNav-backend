@@ -13,6 +13,7 @@ install:
 
 script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
+  - go get
   - GOOS=linux GOARCH=arm go build main.go
 
 deploy:
