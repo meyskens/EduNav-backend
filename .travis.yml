@@ -11,6 +11,10 @@ addons:
 install:
   - export SSHPASS=$DEPLOY_PASS
 
+before_script:
+  - go vet ./...
+
+
 script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
   - go get -v -d
