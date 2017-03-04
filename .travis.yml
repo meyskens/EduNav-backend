@@ -18,7 +18,6 @@ before_script:
 
 script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
-  - go get -u -v -d
   - GOOS=linux GOARCH=arm go build main.go
 
 deploy:
