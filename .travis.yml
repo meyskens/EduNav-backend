@@ -23,5 +23,6 @@ script:
 deploy:
   provider: script
   script: deploy.sh
+  deploy.skip_cleanup: true
   on:
     branch: prod
