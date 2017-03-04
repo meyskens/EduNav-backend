@@ -10,11 +10,11 @@ addons:
 
 install:
   - export SSHPASS=$DEPLOY_PASS
-  - export GOPATH=/tmp/go
+  - go get -u github.com/labstack/echo
+  - go get -u gopkg.in/mgo.v2
 
 before_script:
   - go vet ./...
-
 
 script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
