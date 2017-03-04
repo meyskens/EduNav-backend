@@ -20,9 +20,5 @@ script:
   - sshpass -e ssh edunav@edunav.eyskens.me "echo ok";
   - GOOS=linux GOARCH=arm go build main.go
 
-deploy:
-  provider: script
-  script: deploy.sh
-  deploy.skip_cleanup: true
-  on:
-    branch: prod
+after_success:
+- if [ "$TRAVIS_BRANCH" == "prod" ]; then sshpass -e scp ./main edunav@edunav.eyskens.me:/opt/edunav/; fi
