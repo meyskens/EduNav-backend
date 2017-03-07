@@ -11,6 +11,7 @@ addons:
 install:
   - export SSHPASS=$DEPLOY_PASS
   - go get -u github.com/labstack/echo
+  - go get -u github.com/labstack/echo/middleware
   - go get -u gopkg.in/mgo.v2
 
 before_script:
