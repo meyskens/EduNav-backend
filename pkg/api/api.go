@@ -10,6 +10,7 @@ import (
 	"../database"
 	"../maps"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	mgo "gopkg.in/mgo.v2"
 )
 
@@ -24,6 +25,7 @@ func Run() {
 	db = database.GetDatabase(conf)
 
 	e := echo.New()
+	e.Use(middleware.CORS())
 	e.GET("/", getRoot)
 	e.GET("/maps", getMaps)
 	e.POST("/basestations/:key/add", addBaseStation)
