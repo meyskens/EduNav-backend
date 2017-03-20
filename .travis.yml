@@ -22,4 +22,4 @@ script:
   - GOOS=linux GOARCH=arm go build main.go
 
 after_success:
-- if [ "$TRAVIS_BRANCH" == "prod" ]; then sshpass -e scp ./main edunav@edunav.eyskens.me:/opt/edunav/; fi
+- if [ "$TRAVIS_BRANCH" == "prod" ]; then sshpass -e ssh edunav@edunav.eyskens.me "sudo systemctl stop edunav" && sshpass -e scp ./main edunav@edunav.eyskens.me:/opt/edunav/ && sshpass -e ssh edunav@edunav.eyskens.me "sudo systemctl start edunav"; fi
