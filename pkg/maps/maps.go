@@ -30,7 +30,7 @@ func (m *Maps) Get(id string) (Map, error) {
 	c := m.database.C("maps").With(m.database.Session.Copy())
 
 	result := Map{}
-	err := c.Find(bson.M{"_id": id}).One(&result)
+	err := c.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&result)
 	if err != nil {
 		return result, err
 	}

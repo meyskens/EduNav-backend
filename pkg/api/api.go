@@ -44,7 +44,7 @@ func getRoot(c echo.Context) error {
 	return c.String(http.StatusOK, "EduNav backend")
 }
 
-// e.GET("/maps", getUser)
+// e.GET("/maps", getMaps)
 func getMaps(c echo.Context) error {
 	m := maps.New(db)
 	allMaps, err := m.GetAll()
@@ -54,7 +54,7 @@ func getMaps(c echo.Context) error {
 	return c.JSON(http.StatusOK, allMaps)
 }
 
-// e.GET("/maps/:id", getUser)
+// e.GET("/maps/:id", getMap)
 func getMap(c echo.Context) error {
 	m := maps.New(db)
 	mapForID, err := m.Get(c.Param("id"))
