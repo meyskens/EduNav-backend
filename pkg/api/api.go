@@ -19,7 +19,7 @@ var (
 	conf config.ConfigurationInfo
 )
 
-// Run starts the HTTP sercer
+// Run starts the HTTP server
 func Run() {
 	conf = config.GetConfiguration()
 	db = database.GetDatabase(conf)
@@ -28,6 +28,7 @@ func Run() {
 	e.Use(middleware.CORS())
 	e.GET("/", getRoot)
 	e.GET("/maps", getMaps)
+	e.GET("/maps/:id", getMap)
 	e.POST("/basestations/:key/add", addBaseStation)
 	if conf.AutoTLS {
 		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist(conf.Hostname)
@@ -51,6 +52,16 @@ func getMaps(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, allMaps)
+}
+
+// e.GET("/maps/:id", getUser)
+func getMap(c echo.Context) error {
+	m := maps.New(db)
+	mapForID, err := m.Get(c.Param("id"))
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, mapForID)
 }
 
 // e.POST("/basestations", addBaseStation)
