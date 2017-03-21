@@ -9,6 +9,7 @@ import (
 	"../config"
 	"../database"
 	"../maps"
+	"../rooms"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	mgo "gopkg.in/mgo.v2"
@@ -30,6 +31,7 @@ func Run() {
 	e.GET("/maps", getMaps)
 	e.GET("/maps/:id", getMap)
 	e.POST("/basestations/:key/add", addBaseStation)
+	e.POST("/rooms/:key/add", addRoom)
 	if conf.AutoTLS {
 		e.AutoTLSManager.HostPolicy = autocert.HostWhitelist(conf.Hostname)
 		e.AutoTLSManager.Cache = autocert.DirCache(conf.CertCache)
@@ -78,4 +80,20 @@ func addBaseStation(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, b)
+}
+
+// e.POST("/rooms/:key/add", addRoom)
+func addRoom(c echo.Context) error {
+	if c.Param("key") != conf.APIToken {
+		return c.String(http.StatusUnauthorized, "Invalid API key")
+	}
+	r := rooms.New(db)
+	room := new(rooms.Room)
+	if err := c.Bind(room); err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	if err := r.Add(room); err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, room)
 }

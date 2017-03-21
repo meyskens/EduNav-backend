@@ -1,4 +1,4 @@
-package maps
+package rooms
 
 import (
 	mgo "gopkg.in/mgo.v2"
@@ -10,8 +10,8 @@ type Room struct {
 	ID      bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name    string        `json:"name,omitempty" bson:"name,omitempty"`
 	MapID   bson.ObjectId `json:"mapID,omitempty" bson:"mapID,omitempty"`
-	X       int           `json:"x" bson:"x"`
-	Y       int           `json:"y" bson:"y"`
+	X       float64       `json:"x" bson:"x"`
+	Y       float64       `json:"y" bson:"y"`
 	Comment string        `json:"comment,omitempty" bson:"comment,omitempty"`
 }
 
@@ -59,4 +59,10 @@ func (r *Rooms) GetAll() ([]Room, error) {
 		return result, err
 	}
 	return result, nil
+}
+
+// Add adds a room to the database
+func (r *Rooms) Add(room *Room) error {
+	c := r.database.C("rooms").With(r.database.Session.Copy())
+	return c.Insert(room)
 }
