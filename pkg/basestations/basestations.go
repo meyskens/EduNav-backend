@@ -24,6 +24,18 @@ func New(database *mgo.Database) Basestations {
 	return Basestations{database: database}
 }
 
+// GetForMap gets all basestations in the database which are on a specific Map
+func (b *Basestations) GetForMap(mapID string) ([]Basestation, error) {
+	c := b.database.C("basestations").With(b.database.Session.Copy())
+
+	result := []Basestation{}
+	err := c.Find(bson.M{"mapID": bson.ObjectIdHex(mapID)}).All(&result)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
 // GetAll gets all basestations in the database
 func (b *Basestations) GetAll() ([]Basestation, error) {
 	c := b.database.C("basestations").With(b.database.Session.Copy())
