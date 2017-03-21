@@ -42,7 +42,7 @@ func (r *Rooms) GetForMap(mapID string) ([]Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
 
 	result := []Room{}
-	err := c.Find(bson.M{"mapID": mapID}).All(&result)
+	err := c.Find(bson.M{"mapID": bson.ObjectIdHex(mapID)}).All(&result)
 	if err != nil {
 		return result, err
 	}

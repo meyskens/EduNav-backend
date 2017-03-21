@@ -30,6 +30,7 @@ func Run() {
 	e.GET("/", getRoot)
 	e.GET("/maps", getMaps)
 	e.GET("/maps/:id", getMap)
+	e.GET("/rooms/map/:mapID", getRoomsForMapID)
 	e.POST("/basestations/:key/add", addBaseStation)
 	e.POST("/rooms/:key/add", addRoom)
 	if conf.AutoTLS {
@@ -64,6 +65,16 @@ func getMap(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, mapForID)
+}
+
+// e.GET("/rooms/map/:mapID", getRoomsForMapID)
+func getRoomsForMapID(c echo.Context) error {
+	r := rooms.New(db)
+	room, err := r.GetForMap(c.Param("mapID"))
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, room)
 }
 
 // e.POST("/basestations", addBaseStation)
