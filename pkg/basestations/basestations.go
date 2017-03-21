@@ -9,8 +9,8 @@ import (
 type Basestation struct {
 	ID    bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
 	BSSID string        `json:"BSSID,omitempty" bson:"BSSID,omitempty" form:"BSSID" query:"BSSID"`
-	X     int           `json:"x" bson:"x" form:"x" query:"x"`
-	Y     int           `json:"y" bson:"y" form:"y" query:"y"`
+	X     float64       `json:"x" bson:"x" form:"x" query:"x"`
+	Y     float64       `json:"y" bson:"y" form:"y" query:"y"`
 	MapID bson.ObjectId `json:"mapID,omitempty" bson:"mapID,omitempty" form:"mapID" query:"mapID"`
 }
 
