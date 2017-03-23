@@ -16,9 +16,10 @@ var (
 
 // Contributor contains the name and email for each contriutor
 type Contributor struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	AvatarURL string `json:"avatarURL"`
 }
 
 // GetContributors gets all contributors of the EduNav project
@@ -62,9 +63,10 @@ func getContributorsForRepo(org, name string, out chan []Contributor) {
 			continue
 		}
 		contributor := Contributor{
-			ID:    info.GetID(),
-			Name:  info.GetName(),
-			Email: info.GetEmail(),
+			ID:        info.GetID(),
+			Name:      info.GetName(),
+			Email:     info.GetEmail(),
+			AvatarURL: info.GetAvatarURL(),
 		}
 		contributors = append(contributors, contributor)
 	}
