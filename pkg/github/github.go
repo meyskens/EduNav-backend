@@ -49,7 +49,7 @@ func getContributorsForRepo(org, name string, out chan []Contributor) {
 	stats, _, err := client.Repositories.ListContributorsStats(context.Background(), org, name)
 	if _, ok := err.(*gh.AcceptedError); ok {
 		time.Sleep(1 * time.Second)
-		getContributorsForRepo(org, name, out) // repeat till we got something
+		go getContributorsForRepo(org, name, out) // repeat till we got something
 		return
 	}
 	if err != nil {
