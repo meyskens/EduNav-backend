@@ -2,32 +2,38 @@ package api
 
 import (
 	"net/http"
+	"time"
 
 	"golang.org/x/crypto/acme/autocert"
 
 	"../basestations"
 	"../config"
 	"../database"
+	gh "../github"
 	"../maps"
 	"../rooms"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	goCache "github.com/patrickmn/go-cache"
 	mgo "gopkg.in/mgo.v2"
 )
 
 var (
-	db   *mgo.Database
-	conf config.ConfigurationInfo
+	db    *mgo.Database
+	conf  config.ConfigurationInfo
+	cache *goCache.Cache
 )
 
 // Run starts the HTTP server
 func Run() {
 	conf = config.GetConfiguration()
 	db = database.GetDatabase(conf)
+	cache = goCache.New(5*time.Minute, 30*time.Second)
 
 	e := echo.New()
 	e.Use(middleware.CORS())
 	e.GET("/", getRoot)
+	e.GET("/contributors", getContributors)
 	e.GET("/maps", getMaps)
 	e.GET("/maps/:id", getMap)
 	e.GET("/rooms/map/:mapID", getRoomsForMapID)
@@ -46,6 +52,16 @@ func Run() {
 // e.GET("/", getRoot)
 func getRoot(c echo.Context) error {
 	return c.String(http.StatusOK, "EduNav backend")
+}
+
+// e.GET("/contributors", getContributors)
+func getContributors(c echo.Context) error {
+	if cachedContributors, found := cache.Get("/contributors"); found {
+		return c.JSON(http.StatusOK, cachedContributors.([]gh.Contributor))
+	}
+	contributors := gh.GetContributors()
+	cache.Set("/contributors", contributors, goCache.DefaultExpiration)
+	return c.JSON(http.StatusOK, contributors)
 }
 
 // e.GET("/maps", getMaps)
