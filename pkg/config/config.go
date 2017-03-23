@@ -10,6 +10,7 @@ type ConfigurationInfo struct {
 	MongoDBURL  string `json:"mongoDBURL"`
 	MongoUseTLS bool   `json:"mongoUseTLS"`
 	APIToken    string `json:"apiToken"`
+	GitHubToken string `json:"gitHubToken"`
 	AutoTLS     bool   `json:"autoTLS"`
 	Bind        string `json:"bind"`
 	Hostname    string `json:"hostname"`

@@ -13,6 +13,8 @@ install:
   - go get -u github.com/labstack/echo
   - go get -u github.com/labstack/echo/middleware
   - go get -u gopkg.in/mgo.v2
+  - go get -u github.com/google/go-github/github
+  - go get -u github.com/patrickmn/go-cache
 
 before_script:
   - go vet ./...
