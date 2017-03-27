@@ -37,6 +37,7 @@ func Run() {
 	e.GET("/maps", getMaps)
 	e.GET("/maps/:id", getMap)
 	e.GET("/rooms/:id", getRoom)
+	e.GET("/rooms/search", getRoomsForSearch)
 	e.GET("/rooms/map/:mapID", getRoomsForMapID)
 	e.GET("/basestations/map/:mapID", getBasestationsForMapID)
 	e.POST("/basestations/:key/add", addBaseStation)
@@ -93,6 +94,16 @@ func getRoom(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, room)
+}
+
+// e.GET("/rooms/search", getRoomsForSearch)
+func getRoomsForSearch(c echo.Context) error {
+	r := rooms.New(db)
+	rooms, err := r.GetForTerm(c.QueryParam("term"))
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, rooms)
 }
 
 // e.GET("/rooms/map/:mapID", getRoomsForMapID)
