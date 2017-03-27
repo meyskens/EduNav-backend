@@ -41,7 +41,7 @@ func (r *Rooms) Get(id string) (Room, error) {
 func (r *Rooms) GetForTerm(term string) ([]Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
 	result := []Room{}
-	err := c.Find(bson.M{"name": bson.RegEx{Pattern: term}}).Sort("name").All(&result)
+	err := c.Find(bson.M{"name": bson.RegEx{Pattern: term, Options: "i"}}).Sort("name").All(&result)
 	if err != nil {
 		return result, err
 	}
