@@ -37,6 +37,17 @@ func (r *Rooms) Get(id string) (Room, error) {
 	return result, nil
 }
 
+// GetForTerm gives all rooms with a given term in the name
+func (r *Rooms) GetForTerm(term string) ([]Room, error) {
+	c := r.database.C("rooms").With(r.database.Session.Copy())
+	result := []Room{}
+	err := c.Find(bson.M{"name": bson.RegEx{Pattern: term}}).Sort("name").All(&result)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
 // GetForName gets the Map for the given name
 func (r *Rooms) GetForName(name string) (Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
@@ -54,7 +65,7 @@ func (r *Rooms) GetForMap(mapID string) ([]Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
 
 	result := []Room{}
-	err := c.Find(bson.M{"mapID": bson.ObjectIdHex(mapID)}).All(&result)
+	err := c.Find(bson.M{"mapID": bson.ObjectIdHex(mapID)}).Sort("name").All(&result)
 	if err != nil {
 		return result, err
 	}
@@ -66,7 +77,7 @@ func (r *Rooms) GetAll() ([]Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
 
 	result := []Room{}
-	err := c.Find(bson.M{}).All(&result)
+	err := c.Find(bson.M{}).Sort("name").All(&result)
 	if err != nil {
 		return result, err
 	}
