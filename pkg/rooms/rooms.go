@@ -25,6 +25,18 @@ func New(database *mgo.Database) Rooms {
 	return Rooms{database: database}
 }
 
+// Get gets the Map for the given id
+func (r *Rooms) Get(id string) (Room, error) {
+	c := r.database.C("rooms").With(r.database.Session.Copy())
+
+	result := Room{}
+	err := c.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(&result)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
 // GetForName gets the Map for the given name
 func (r *Rooms) GetForName(name string) (Room, error) {
 	c := r.database.C("rooms").With(r.database.Session.Copy())
