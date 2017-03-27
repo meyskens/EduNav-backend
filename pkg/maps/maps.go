@@ -42,7 +42,7 @@ func (m *Maps) GetAll() ([]Map, error) {
 	c := m.database.C("maps").With(m.database.Session.Copy())
 
 	result := []Map{}
-	err := c.Find(bson.M{}).All(&result)
+	err := c.Find(bson.M{}).Sort("building", "floor").All(&result)
 	if err != nil {
 		return result, err
 	}
