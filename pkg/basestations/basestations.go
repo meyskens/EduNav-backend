@@ -36,6 +36,18 @@ func (b *Basestations) GetForMap(mapID string) ([]Basestation, error) {
 	return result, nil
 }
 
+// GetForBSSID gets a basestation in the database with a specific BSSID
+func (b *Basestations) GetForBSSID(bssid string) (Basestation, error) {
+	c := b.database.C("basestations").With(b.database.Session.Copy())
+
+	result := Basestation{}
+	err := c.Find(bson.M{"BSSID": bssid}).One(&result)
+	if err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
 // GetAll gets all basestations in the database
 func (b *Basestations) GetAll() ([]Basestation, error) {
 	c := b.database.C("basestations").With(b.database.Session.Copy())

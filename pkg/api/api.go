@@ -39,6 +39,7 @@ func Run() {
 	e.GET("/rooms/:id", getRoom)
 	e.GET("/rooms/search", getRoomsForSearch)
 	e.GET("/rooms/map/:mapID", getRoomsForMapID)
+	e.GET("/basestation/bssid/:bssid", getBasestationsBSSID)
 	e.GET("/basestations/map/:mapID", getBasestationsForMapID)
 	e.POST("/basestations/:key/add", addBaseStation)
 	e.POST("/rooms/:key/add", addRoom)
@@ -114,6 +115,16 @@ func getRoomsForMapID(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, room)
+}
+
+// e.GET("/basestation/bssid/:bssid", getBasestationsBSSID)
+func getBasestationsBSSID(c echo.Context) error {
+	b := basestations.New(db)
+	bs, err := b.GetForBSSID(c.Param("bssid"))
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, bs)
 }
 
 // e.GET("/basestations/map/:mapID", getBasestationsForMapID)
