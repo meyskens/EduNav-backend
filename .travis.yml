@@ -7,9 +7,9 @@ env:
       - QEMU_VER=v2.9.1
       - DOCKER_REPO=maartje/edunav-backend
     matrix:
-      - ARCH=amd64 GOARCH=amd64   QEMU_ARCH=x86_64
-      - ARCH=armhf GOARCH=arm QEMU_ARCH=arm    
-      - ARCH=arm64 GOARCH=arm64 QEMU_ARCH=aarch64
+      - ARCH=amd64 GO_ARCH=amd64   QEMU_ARCH=x86_64
+      - ARCH=armhf GO_ARCH=arm QEMU_ARCH=arm    
+      - ARCH=arm64 GO_ARCH=arm64 QEMU_ARCH=aarch64
 
 before_install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -29,7 +29,7 @@ install:
   - go get -u golang.org/x/oauth2
 
 script:
-  - GOOS=linux GOARCH="${GOARCH}" go build main.go
+  - GOOS=linux GOARCH="${GO_ARCH}" go build main.go
   - docker build -t $DOCKER_REPO:$ARCH-latest --build-arg ARCH="$ARCH" ./
 
 after_success:
