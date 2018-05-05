@@ -63,7 +63,7 @@ func getContributorsForRepo(org, name string, out chan []Contributor) {
 			continue
 		}
 		contributor := Contributor{
-			ID:        int64(info.GetID()),
+			ID:        int(info.GetID()),
 			Name:      info.GetName(),
 			Email:     info.GetEmail(),
 			AvatarURL: info.GetAvatarURL(),
