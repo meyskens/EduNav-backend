@@ -1,5 +1,5 @@
 ARG ARCH
-FROM multiarch/alpine:${ARCH}-edge
+FROM multiarch/debia-deboostrap:${ARCH}-stretch
 
 RUN apk add --no-cache ca-certificates
 
