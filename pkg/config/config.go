@@ -20,7 +20,7 @@ type ConfigurationInfo struct {
 // GetConfiguration reads the confiruration from config.json and returns it
 func GetConfiguration() ConfigurationInfo {
 	returnConfig := ConfigurationInfo{}
-	data, err := os.Open("config.json")
+	data, err := os.Open("./config.json")
 	if err != nil {
 		panic(err)
 	}
