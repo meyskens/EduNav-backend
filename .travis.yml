@@ -33,9 +33,6 @@ install:
   - go get -u github.com/patrickmn/go-cache
   - go get -u golang.org/x/oauth2
 
-before_script:
-  - go vet ./...
-
 script:
   - GOOS=linux GOARCH="${GOARCH}" go build main.go
   - docker build -t $DOCKER_REPO:$ARCH-latest --build-arg ARCH="$ARCH" ./
