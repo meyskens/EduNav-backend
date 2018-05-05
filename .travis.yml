@@ -29,7 +29,7 @@ install:
   - go get -u golang.org/x/oauth2
 
 script:
-  - GOOS=linux GOARCH="${GO_ARCH}" go build main.go
+  - GOOS=linux GOARCH="${GO_ARCH}" go build -o main ./
   - docker build -t $DOCKER_REPO:$ARCH-latest --build-arg ARCH="$ARCH" ./
 
 after_success:
