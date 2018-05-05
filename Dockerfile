@@ -1,5 +1,5 @@
 ARG ARCH
-FROM multiarch/debia-deboostrap:${ARCH}-stretch
+FROM multiarch/debian-deboostrap:${ARCH}-stretch
 
 RUN apk add --no-cache ca-certificates
 
